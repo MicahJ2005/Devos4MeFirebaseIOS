@@ -363,38 +363,90 @@ const GroupPrayerHistoryPage = (params) => {
 };
 
 const styles = StyleSheet.create({
-  item: {
-    padding: 15,
-    borderRadius: 50,
-    marginBottom: 10,
-    marginTop: 10,
-    marginRight: 30,
-    marginLeft: 30,
-    fontSize: 30,
-    height: 80,
-    zIndex:-1,
-    textAlign: 'center',
-    color: '#BCA37F',
-    backgroundColor: '#113946',
-    elevation: 4,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 10,
-        height: 2,
+  buttonShowDetail: {
+    ...Platform.select({
+      ios: {
+        padding: 15,
+        borderRadius: 50,
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 30,
+        marginLeft: 30,
+        fontSize: 30,
+        height: 80,
+        zIndex:-1,
+        textAlign: 'center',
+        color: '#BCA37F',
+        backgroundColor: '#113946',
+        elevation: 4,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 2,
+            height: 2,
+          },
+        shadowOpacity: 1,
+        shadowRadius: 5,
       },
-      shadowOpacity: 1,
-      shadowRadius: 10,
+      android:{
+      }
+    }),
+    
+  },
+  item: {
+    ...Platform.select({
+      ios: {
+        textAlign: 'center',
+        color: '#BCA37F',
+        backgroundColor: '#113946',
+        fontSize: 30,
+      },
+      android:{
+        padding: 15,
+        borderRadius: 50,
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 30,
+        marginLeft: 30,
+        fontSize: 30,
+        height: 80,
+        zIndex:-1,
+        textAlign: 'center',
+        color: '#BCA37F',
+        backgroundColor: '#113946',
+        elevation: 4,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 10,
+            height: 2,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 10,
+      },
+    })
   },
   flatListStyle:{
     height: '80%',
   },
   timesPrayedBubbleText:{
-    fontSize: 12,
-    color: '#C56E33',
-    marginTop: 15,
-    position: 'absolute',
-    right:-10,
-    zIndex:1,
+    ...Platform.select({
+    ios: {
+      fontSize: 12,
+      color: '#C56E33',
+      marginTop: 15,
+      position: 'absolute',
+      right:-10,
+      zIndex:1,
+    },
+    android:{
+      
+      fontSize: 12,
+      color: '#C56E33',
+      marginTop: 15,
+      position: 'absolute',
+      right:-10,
+      zIndex:1,
+    },
+  }),
   },
   timesPrayedBubble: {
     backgroundColor: 'grey',
@@ -529,18 +581,41 @@ const styles = StyleSheet.create({
       shadowRadius: 10,
   },
   lockIcon:{
-    color:"#BCA37F",
-    // marginLeft:55,
-    position: 'absolute',
-    right:30,
-    top: 5,
+    ...Platform.select({
+      ios: {
+        color:"#BCA37F",
+        // marginLeft:55,
+        position: 'absolute',
+        right:0,
+        top: 5,
+      },
+      android:{
+        color:"#BCA37F",
+        // marginLeft:55,
+        position: 'absolute',
+        right:30,
+        top: 5,
+      },
+    })
+    
   },
   accessCode:{
-    color:"#C56E33",
-    // position: 'absolute',
-    bottom: 35,
-    textAlign:'center',
-    alignContent:'center'
+    ...Platform.select({
+      ios: {
+        color:"#C56E33",
+        // position: 'absolute',
+        bottom: 0,
+        textAlign:'center',
+        alignContent:'center'
+      },
+      android:{
+        color:"#C56E33",
+        // position: 'absolute',
+        bottom: 35,
+        textAlign:'center',
+        alignContent:'center'
+      },
+    })
     
   },
 });

@@ -1664,11 +1664,23 @@ const styles = StyleSheet.create({
     },
   },
   homeButtonContainer: {
-    position: 'absolute',
-    bottom:5,
-    display: 'inline',
-    flexDirection: 'row',
-    margin: 10,
+    ...Platform.select({
+      ios: {
+        position: 'absolute',
+        bottom:35,
+        display: 'inline',
+        flexDirection: 'row',
+        margin: 10,
+      },
+      android:{
+        position: 'absolute',
+        bottom:5,
+        display: 'inline',
+        flexDirection: 'row',
+        margin: 10,
+      }
+    }),
+    
   },
   homeContentView: {
     fontSize:25,

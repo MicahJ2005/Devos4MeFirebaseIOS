@@ -473,7 +473,7 @@ const newPrayerRequest = (params) => {
                   </View>
                   
                   
-                  <Text style={styles.item} key={item.id}>{item.name}
+                  <Text style={[styles.item]} key={item.id}>{item.name}
                   
                   </Text>
                   
@@ -673,9 +673,20 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   helpText:{
-    textAlign: 'center',
-    color: '#C56E33',
-    fontStyle: 'italic',
+    ...Platform.select({
+      ios: {
+        marginLeft:15,
+        textAlign: 'center',
+        color: '#C56E33',
+        fontStyle: 'italic',
+      },
+      android:{
+        textAlign: 'center',
+        color: '#C56E33',
+        fontStyle: 'italic',
+      }
+    }),
+    
   },
   textStylePrayerRequest: {
     color: '#BCA37F',
