@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Modal, SafeAreaView, ScrollView, TextInput,  StyleSheet, Pressable, Alert,FlatList } from 'react-native';
+import {View, Text, Modal, SafeAreaView, ScrollView, TextInput,  StyleSheet, Pressable, Alert,FlatList, Platform } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -497,6 +497,35 @@ const newPrayerRequest = (params) => {
 };
 
 const styles = StyleSheet.create({
+  buttonShowDetail: {
+    ...Platform.select({
+      ios: {
+        padding: 15,
+        // width: '100%',
+        borderRadius: 50,
+        marginBottom: 10,
+        // marginTop: 10,
+        marginRight: 30,
+        marginLeft: 30,
+        fontSize: 30,
+        height: 80,
+        zIndex:-1,
+        textAlign: 'center',
+        color: '#BCA37F',
+        backgroundColor: '#113946',
+        elevation: 4,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 2,
+            height: 2,
+          },
+        shadowOpacity: 1,
+        shadowRadius: 5,
+      },
+      android:{
+      }
+    }),
+  },
   bottomButtonText:{
     color:"#BCA37F",
     fontSize:20
@@ -519,7 +548,17 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   flatListStyle:{
-    height:'85%'
+    ...Platform.select({
+      ios: {
+        height:'85%',
+        // marginLeft:'12.5%',
+        width:'100%'
+      },
+      android:{
+        height:'85%',
+      }
+    }),
+    
   },
   answeredPrayerBox:{
     marginTop: 10,
@@ -553,29 +592,54 @@ const styles = StyleSheet.create({
     textAlign: 'left'
   },
   timesPrayedArea:{
+    borderRadius: 50,
+    // marginTop:-20
     // flexDirection:'column'
   },
   timesPrayedBubbleText:{
     fontSize: 12,
     color: '#C56E33',
-    marginTop: 65,
+    marginTop: 35,
     position: 'absolute',
-    right:45,
-    zIndex:1,
+    right:15,
+    // zIndex:1,
+    // borderRadius: 60,
   },
   timesPrayedBubble: {
-    backgroundColor: 'grey',
-    fontSize: 20,
-    width:80,
-    height: 30,
-    marginRight:10,
-    marginBottom: -60,
-    zIndex:1,
-    left:'75%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 60,
-    textAlign:'center'
+    ...Platform.select({
+      ios: {
+        backgroundColor: 'grey',
+        fontSize: 20,
+        width:80,
+        height: 30,
+        // marginRight:10,
+        marginBottom: -70,
+        zIndex:1,
+        left:'85%',
+        position:'absolute',
+        top:2,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // borderWidth:1,
+        borderRadiusß: 60,
+        textAlign:'center'
+      },
+      android:{
+        backgroundColor: 'grey',
+        fontSize: 20,
+        width:80,
+        height: 30,
+        marginRight:10,
+        marginBottom: -60,
+        zIndex:1,
+        left:'75%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 60,
+        textAlign:'center'
+      }
+    }),
+    
   },
   safeAreaContainer:{
     height: 360,
@@ -626,19 +690,40 @@ const styles = StyleSheet.create({
     backgroundColor: '#BCA37F',
   },
   modalView: {
-    margin: 20,
-    backgroundColor: '#FFF2D8',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        margin: 20,
+        marginTop:50,
+        backgroundColor: '#FFF2D8',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      android:{
+        margin: 20,
+        backgroundColor: '#FFF2D8',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      }
+    }),
+    
   },
   modalAnsweredPrayerView: {
     height: '93%',
@@ -693,26 +778,53 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   item: {
-    paddingTop: '5%',
-    borderRadius: 50,
-    marginBottom: 10,
-    marginTop: 10,
-    marginRight: 30,
-    marginLeft: 30,
-    fontSize: 25,
-    height: 80,
-    zIndex:-1,
-    textAlign: 'center',
-    color:"#BCA37F",
-    backgroundColor: '#113946',
-    elevation: 4,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 10,
-        height: 2,
+    ...Platform.select({
+      ios: {
+        paddingTop: '3%',
+        // borderRadius: 50,
+        // marginBottom: 10,
+        // marginTop: 10,
+        // marginRight: 30,
+        // marginLeft: 30,
+        fontSize: 25,
+        // height: 80,
+        zIndex:-1,
+        textAlign: 'center',
+        color:"#BCA37F",
+        backgroundColor: '#113946',
+        // elevation: 4,
+        //   shadowColor: '#000',
+        //   shadowOffset: {
+        //     width: 10,
+        //     height: 2,
+        //   },
+        //   shadowOpacity: 1,
+        //   shadowRadius: 10,
       },
-      shadowOpacity: 1,
-      shadowRadius: 10,
+      android:{
+        paddingTop: '5%',
+        borderRadius: 50,
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 30,
+        marginLeft: 30,
+        fontSize: 25,
+        height: 80,
+        zIndex:-1,
+        textAlign: 'center',
+        color:"#BCA37F",
+        backgroundColor: '#113946',
+        elevation: 4,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 10,
+            height: 2,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 10,
+      }
+    }),
+    
   },
   answeredPrayer:{
     width:100,

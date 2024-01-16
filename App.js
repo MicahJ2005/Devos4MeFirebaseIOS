@@ -1553,10 +1553,21 @@ const styles = StyleSheet.create({
     height:'77%'
   },
   tinyLogo: {
-    width: 400,
-    height: 170,
-    marginTop: 15,
-    marginLeft: 5,
+    ...Platform.select({
+      ios: {
+        width: 380,
+        height: 170,
+        marginTop: 15,
+        marginLeft: 5,
+      },
+      android:{
+        width: 400,
+        height: 170,
+        marginTop: 15,
+        marginLeft: 5,
+      }
+    }),
+   
   },
   tinyLogoRegister: {
     width: 400,
@@ -1626,15 +1637,31 @@ const styles = StyleSheet.create({
     },
   },
   myPrayerListPressable: {
-    borderRadius: 10,
-    backgroundColor: '#113946',
-    width:'45%',
-    padding: 20,
-    elevation: 2,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    ...Platform.select({
+      ios: {
+        borderRadius: 10,
+        backgroundColor: '#113946',
+        width:'45%',
+        padding: 20,
+        elevation: 2,
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+      },
+      android:{
+        borderRadius: 10,
+        backgroundColor: '#113946',
+        width:'45%',
+        padding: 20,
+        elevation: 2,
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+      }
+    }),
+    
   },
   myDailyDevotionPressableText: {
     color: '#EAD7BB',
@@ -1644,10 +1671,21 @@ const styles = StyleSheet.create({
     
   },
   myPrayerListPressableText: {
-    color: '#EAD7BB',
-    backgroundColor: '#113946',
-    textAlign: 'center',
-    fontSize: 15,
+    ...Platform.select({
+      ios: {
+        color: '#EAD7BB',
+        backgroundColor: '#113946',
+        textAlign: 'center',
+        fontSize: 15,
+      },
+      android:{
+         color: '#EAD7BB',
+        backgroundColor: '#113946',
+        textAlign: 'center',
+        fontSize: 15,
+      }
+    }),
+   
   },
   LoginPressable:{
     borderRadius: 10,
@@ -1666,8 +1704,8 @@ const styles = StyleSheet.create({
   homeButtonContainer: {
     ...Platform.select({
       ios: {
-        position: 'absolute',
-        bottom:35,
+        // position: 'absolute',
+        // bottom:35,
         display: 'inline',
         flexDirection: 'row',
         margin: 10,
