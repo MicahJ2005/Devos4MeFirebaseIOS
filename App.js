@@ -239,7 +239,7 @@ export default function App() {
     console.log('password ', password);
     
     /////FOR FIREBASE
-    const q = query(collection(db, "users"), where("username", "==", username), where("password", "==", password) , where("active", "==", true));
+    const q = query(collection(db, "users"), where("username", "==", username.toLowerCase()), where("password", "==", password) , where("active", "==", true));
     console.log('q check: ', q);
     const querySnapshot = await getDocs(q);
     console.log('querySnapshot check: ', querySnapshot.size);
@@ -282,7 +282,7 @@ export default function App() {
     const validateEmail = async () => {
       console.log('IN Validate Email Click')
       console.log('IN Validate Email address', emailAddress);
-      const q = query(collection(db, "users"), where("username", "==", emailAddress), where("active", "==", true));
+      const q = query(collection(db, "users"), where("username", "==", emailAddress.toLowerCase()), where("active", "==", true));
       console.log('q check: ', q);
       const querySnapshot = await getDocs(q);
       console.log('querySnapshot check: ', querySnapshot.size);
@@ -357,7 +357,7 @@ export default function App() {
         ){
 
           //check if email address is already used//
-          const checkEmailQ = query(collection(db, "users"), where("username", "==", registerEmailAddress));
+          const checkEmailQ = query(collection(db, "users"), where("username", "==", registerEmailAddress.toLowerCase()));
           console.log('q check: ', checkEmailQ);
           const queryCheckEmail = await getDocs(checkEmailQ);
           console.log('querySnapshot check: ', queryCheckEmail.size);
@@ -366,7 +366,7 @@ export default function App() {
             
           }else{
             const newUser = await addDoc(collection(db, "users"), {
-              username: registerEmailAddress,
+              username: registerEmailAddress.toLowerCase(),
               firstname: registerFirstName,
               lastname: registerLastName,
               birthday: registerBirthdate,

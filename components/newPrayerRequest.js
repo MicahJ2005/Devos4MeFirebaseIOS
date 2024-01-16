@@ -504,7 +504,7 @@ const styles = StyleSheet.create({
         // width: '100%',
         borderRadius: 50,
         marginBottom: 10,
-        // marginTop: 10,
+        marginTop: 10,
         marginRight: 30,
         marginLeft: 30,
         fontSize: 30,
@@ -550,6 +550,7 @@ const styles = StyleSheet.create({
   flatListStyle:{
     ...Platform.select({
       ios: {
+        // marginTop:40,
         height:'85%',
         // marginLeft:'12.5%',
         width:'100%'
@@ -592,36 +593,75 @@ const styles = StyleSheet.create({
     textAlign: 'left'
   },
   timesPrayedArea:{
-    borderRadius: 50,
-    // marginTop:-20
-    // flexDirection:'column'
+    
+    ...Platform.select({
+      ios: {
+        // marginTop:10,
+        // borderRadius: 50,
+        // backgroundColor:'grey',
+        // width:30,
+        // zIndex:0
+        
+      },
+      android:{
+        // fontSize: 12,
+        // color: '#C56E33',
+        // marginTop: 35,
+        // position: 'absolute',
+        // right:15,
+        // zIndex:1,
+        // borderRadius: 60,
+      }
+    }),
   },
   timesPrayedBubbleText:{
-    fontSize: 12,
-    color: '#C56E33',
-    marginTop: 35,
-    position: 'absolute',
-    right:15,
-    // zIndex:1,
-    // borderRadius: 60,
+    ...Platform.select({
+      ios: {
+        textShadowColor: 'black',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 30,
+        fontSize: 12,
+        color: '#C56E33',
+        // marginTop: 3,
+        position: 'absolute',
+        right:-10,
+        // zIndex:1,
+        // borderRadius: 60,
+      },
+      android:{
+        fontSize: 12,
+        color: '#C56E33',
+        marginTop: 35,
+        position: 'absolute',
+        right:15,
+        // zIndex:1,
+        // borderRadius: 60,
+      }
+    }),
+    
   },
   timesPrayedBubble: {
     ...Platform.select({
       ios: {
-        backgroundColor: 'grey',
+        color: '#C56E33',
+        textShadowColor: 'black',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 10,
         fontSize: 20,
-        width:80,
+        width:40,
         height: 30,
-        // marginRight:10,
-        marginBottom: -70,
-        zIndex:1,
-        left:'85%',
+        // marginTop:10,
+        // // marginRight:10,
+        // // marginBottom: -70,
+        // zIndex:1,
+        left:'90%',
         position:'absolute',
-        top:2,
-        // justifyContent: 'center',
-        // alignItems: 'center',
+        top:-20,
+        right:5,
+        justifyContent: 'center',
+        alignItems: 'center',
         // borderWidth:1,
-        borderRadiusß: 60,
+        
         textAlign:'center'
       },
       android:{
@@ -760,7 +800,9 @@ const styles = StyleSheet.create({
   helpText:{
     ...Platform.select({
       ios: {
-        marginLeft:15,
+        marginLeft:'15%',
+        // alignContent:'center',
+        // alignItems: 'center',
         textAlign: 'center',
         color: '#C56E33',
         fontStyle: 'italic',
@@ -780,10 +822,9 @@ const styles = StyleSheet.create({
   item: {
     ...Platform.select({
       ios: {
-        paddingTop: '3%',
+        paddingTop: '2%',
         // borderRadius: 50,
         // marginBottom: 10,
-        // marginTop: 10,
         // marginRight: 30,
         // marginLeft: 30,
         fontSize: 25,
