@@ -596,37 +596,20 @@ const styles = StyleSheet.create({
     
     ...Platform.select({
       ios: {
-        // marginTop:10,
-        // borderRadius: 50,
-        // backgroundColor:'grey',
-        // width:30,
-        // zIndex:0
         
       },
       android:{
-        // fontSize: 12,
-        // color: '#C56E33',
-        // marginTop: 35,
-        // position: 'absolute',
-        // right:15,
-        // zIndex:1,
-        // borderRadius: 60,
       }
     }),
   },
   timesPrayedBubbleText:{
     ...Platform.select({
       ios: {
-        textShadowColor: 'black',
-        textShadowOffset: {width: -1, height: 1},
-        textShadowRadius: 30,
         fontSize: 12,
         color: '#C56E33',
-        // marginTop: 3,
+        marginTop: 5,
         position: 'absolute',
         right:-10,
-        // zIndex:1,
-        // borderRadius: 60,
       },
       android:{
         fontSize: 12,
@@ -634,8 +617,6 @@ const styles = StyleSheet.create({
         marginTop: 35,
         position: 'absolute',
         right:15,
-        // zIndex:1,
-        // borderRadius: 60,
       }
     }),
     
@@ -643,26 +624,20 @@ const styles = StyleSheet.create({
   timesPrayedBubble: {
     ...Platform.select({
       ios: {
-        color: '#C56E33',
-        textShadowColor: 'black',
-        textShadowOffset: {width: -1, height: 1},
-        textShadowRadius: 10,
         fontSize: 20,
-        width:40,
+        width:60,
         height: 30,
-        // marginTop:10,
-        // // marginRight:10,
-        // // marginBottom: -70,
-        // zIndex:1,
-        left:'90%',
+        left:'85%',
         position:'absolute',
-        top:-20,
+        top:-25,
         right:5,
         justifyContent: 'center',
         alignItems: 'center',
-        // borderWidth:1,
+        borderRadius:15,
+        textAlign:'center',
+        backgroundColor: 'grey',
+        overflow: 'hidden'
         
-        textAlign:'center'
       },
       android:{
         backgroundColor: 'grey',
@@ -783,7 +758,8 @@ const styles = StyleSheet.create({
   },
   modalViewDetails: {
     margin: 0,
-    height:'100%',
+    marginTop:'10%',
+    height:'95%',
     backgroundColor: '#BCA37F',
     borderRadius: 20,
     padding: 35,
