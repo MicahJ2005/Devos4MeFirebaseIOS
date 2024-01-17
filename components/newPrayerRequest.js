@@ -40,7 +40,7 @@ const newPrayerRequest = (params) => {
   useEffect(() => {
     setData([]);
     loadData();
-    
+    console.log('Platform', Platform);
   }, []);
 
   const loadData = async () => {
@@ -108,6 +108,8 @@ const newPrayerRequest = (params) => {
   }
 
   const deleteFunction = (item) => {
+    console.log('in deleteFunction');
+    setDetailsModalVisible(false);
     setDeleteRequestModalVisible(true);
   }
   const closeDeleteModal = () => {
@@ -216,8 +218,11 @@ const newPrayerRequest = (params) => {
   const answeredPrayer = () => {
     console.log('answeredPrayer', details);
     setDetails(details);
-    // setDetailsModalVisible(false);
+    setDetailsModalVisible(false);
     setAnsweredPrayerInputModalOpen(true);
+    
+    // 
+    
   }
 
   const closeNewRequest = () => {
@@ -264,6 +269,7 @@ const newPrayerRequest = (params) => {
   }
 
   return (
+    
     <View style={styles.centeredViewPrayerList}>
       {/* start new prayer request Modal */}
       <Modal
@@ -329,7 +335,43 @@ const newPrayerRequest = (params) => {
       {/* end new prayer request Modal */}
 
       {/* start delete request Modal */}
-      <Modal
+      {Platform == 'ios' && deleteRequestModalVisible == true ?
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+            <Pressable style={styles.circleButtonDetailCloseModal2} onPress={() => closeDeleteModal()}>
+              <MaterialIcons name="close" size={25} color="white" />
+            </Pressable>
+              <Text style={styles.deleteQuestionText}>Are you sure you want to remove this request?</Text>
+              
+                <Pressable style={styles.circleDeleteRequest} onPress={() => removePrayerRequest()} >
+                  <MaterialIcons name="delete-forever" size={30} color="#EAD7BB" />
+                </Pressable>
+            </View>
+          </View>
+          :
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={deleteRequestModalVisible}
+            onRequestClose={() => {
+              setDeleteRequestModalVisible(!deleteRequestModalVisible);
+            }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+            <Pressable style={styles.circleButtonDetailCloseModal2} onPress={() => closeDeleteModal()}>
+              <MaterialIcons name="close" size={25} color="white" />
+            </Pressable>
+              <Text style={styles.deleteQuestionText}>Are you sure you want to remove this request?</Text>
+              
+                <Pressable style={styles.circleDeleteRequest} onPress={() => removePrayerRequest()} >
+                  <MaterialIcons name="delete-forever" size={30} color="#EAD7BB" />
+                </Pressable>
+            </View>
+          </View>
+        </Modal>
+      }
+
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={deleteRequestModalVisible}
@@ -348,10 +390,52 @@ const newPrayerRequest = (params) => {
               </Pressable>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
       {/* end delete request Modal */}
 
        {/* start Answered Prayer Input Modal */}
+       {Platform == 'ios' && answeredPrayerInputModalOpen == true ? 
+        <View style={styles.centeredView}>
+        <View style={styles.modalAnsweredPrayerView}>
+        <Pressable style={styles.circleButtonAnsweredPrayerCloseModal} onPress={() => closeAnsweredPrayer()}>
+          <MaterialIcons name="close" size={25} color="white" />
+        </Pressable>
+          <Text style={styles.answeredPrayerText}>Prayer Request</Text>
+          <View style={styles.answeredPrayerBox}>
+            <Text style={styles.answeredPrayerDetailText}>Request: </Text>
+            <Text style={styles.answeredPrayerNameText}> {details.name}</Text>
+            <Text style={styles.answeredPrayerDetailText}>Details: </Text>
+            <Text style={styles.answeredPrayerDetailText2}>{details.details}</Text>
+          </View>
+          
+          <Text style={styles.requestInputText}>How has God answered your prayers?</Text>
+          <TextInput
+              style={{
+                  // height: 100,
+                  borderColor: '#113946',
+                  // borderWidth: 4,
+                  // borderRadius: 30,
+                  borderBottomWidth: 4,
+                  width:'95%',
+                  height: '30%',
+                  marginBottom: 40,
+                  
+              }}
+              textAlign='center'
+              onChangeText={newAnswerText => setAnsweredPrayerText(newAnswerText)}
+              placeholder="Answer..."
+              value={details}
+          />
+          
+            <Pressable style={styles.circleSubmitNewRequest} onPress={() => updateAnsweredPrayer()} >
+              <MaterialIcons name="send" size={30} color="#EAD7BB" />
+            </Pressable>
+            
+        
+        
+        </View>
+      </View>
+      :
        <Modal
         animationType="slide"
         transparent={true}
@@ -400,6 +484,7 @@ const newPrayerRequest = (params) => {
           </View>
         </View>
       </Modal>
+      }
       {/* end Answered Prayer Input Modal */}
 
       {/* start prayer request details Modal */}
@@ -413,15 +498,15 @@ const newPrayerRequest = (params) => {
         <View style={styles.centeredViewRequestDetails}>
           
           <View style={styles.modalViewDetails}>
-          <Pressable style={styles.circleButtonDetailEditModal} onPress={() => openEditDetail(details)}>
-            <MaterialIcons name="edit" size={25} color="black" />
-          </Pressable>
-          <Pressable style={styles.circleButtonDetailCloseModal} onPress={() => closeDetails()}>
-            <MaterialIcons name="close" size={25} color="white" />
-          </Pressable>
-          <Pressable style={styles.circleButtonDetailDeleteModal} onPress={() => deleteFunction(details)}>
-            <MaterialIcons name="delete" size={25} color="white" />
-          </Pressable>
+            <Pressable style={styles.circleButtonDetailEditModal} onPress={() => openEditDetail(details)}>
+              <MaterialIcons name="edit" size={25} color="black" />
+            </Pressable>
+            <Pressable style={styles.circleButtonDetailCloseModal} onPress={() => closeDetails()}>
+              <MaterialIcons name="close" size={25} color="white" />
+            </Pressable>
+            <Pressable style={styles.circleButtonDetailDeleteModal} onPress={() => deleteFunction(details)}>
+              <MaterialIcons name="delete" size={25} color="white" />
+            </Pressable>
             <Text style={[styles.requestNameText]}>
               {details.name}
             </Text>
@@ -741,21 +826,45 @@ const styles = StyleSheet.create({
     
   },
   modalAnsweredPrayerView: {
-    height: '93%',
-    margin: 20,
-    backgroundColor: '#FFF2D8',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        height: '80%',
+        marginTop:'15%',
+        margin: 20,
+        backgroundColor: '#FFF2D8',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        zIndex:1,
+      },
+      android:{
+        height: '93%',
+        margin: 20,
+        backgroundColor: '#FFF2D8',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      }
+    }),
+    
   },
+  
   modalViewDetails: {
     margin: 0,
     marginTop:'10%',
@@ -799,24 +908,11 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         paddingTop: '2%',
-        // borderRadius: 50,
-        // marginBottom: 10,
-        // marginRight: 30,
-        // marginLeft: 30,
         fontSize: 25,
-        // height: 80,
         zIndex:-1,
         textAlign: 'center',
         color:"#BCA37F",
         backgroundColor: '#113946',
-        // elevation: 4,
-        //   shadowColor: '#000',
-        //   shadowOffset: {
-        //     width: 10,
-        //     height: 2,
-        //   },
-        //   shadowOpacity: 1,
-        //   shadowRadius: 10,
       },
       android:{
         paddingTop: '5%',
@@ -970,25 +1066,52 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   circleButtonDetailDeleteModal: {
-    width:40,
-    height: 40,
-    margin:10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 42,
-    backgroundColor: '#fff',
-    position: 'absolute',
-    left:10,
-    bottom: 10,
-    backgroundColor:'red',
-    elevation: 15,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    ...Platform.select({
+      ios: {
+        
+        width:40,
+        height: 40,
+        margin:10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 42,
+        backgroundColor: '#fff',
+        position: 'absolute',
+        left:10,
+        bottom: 10,
+        backgroundColor:'red',
+        elevation: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+      },
+      android:{
+      //   
+        width:40,
+        height: 40,
+        margin:10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 42,
+        backgroundColor: '#fff',
+        position: 'absolute',
+        left:10,
+        bottom: 10,
+        backgroundColor:'red',
+        elevation: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+      }
+    })
   },
   nameInputText:{
     textAlign: 'left',

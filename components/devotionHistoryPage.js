@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text,  ScrollView, StyleSheet, Pressable, Alert,FlatList, ActivityIndicator} from 'react-native';
+import {View, Text,  ScrollView, StyleSheet, Pressable, Alert,FlatList, ActivityIndicator, Platform} from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Ionicons } from '@expo/vector-icons';
 import {collection,  getDocs, query, where } from "firebase/firestore";
@@ -241,26 +241,56 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
       },
       item: {
-        padding: 15,
-        borderRadius: 50,
-        marginBottom: 10,
-        marginTop: 10,
-        marginRight: 30,
-        marginLeft: 30,
-        fontSize: 30,
-        height: 80,
-        zIndex:-1,
-        textAlign: 'center',
-        color: '#BCA37F',
-        backgroundColor: '#113946',
-        elevation: 4,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 10,
-            height: 2,
+        ...Platform.select({
+          ios: {
+            padding: 15,
+            overflow:'hidden',
+            borderRadius: 35,
+            marginBottom: 10,
+            marginTop: 5,
+            marginRight: 30,
+            marginLeft: 30,
+            fontSize: 30,
+            height: 70,
+            zIndex:-1,
+            textAlign: 'center',
+            color: '#BCA37F',
+            backgroundColor: '#113946',
+            // justifyContent: 'center',
+            // alignItems: 'center',
+            // elevation: 4,
+            //   shadowColor: '#000',
+            //   shadowOffset: {
+            //     width: 10,
+            //     height: 2,
+            //   },
+            //   shadowOpacity: 1,
+            //   shadowRadius: 10,
           },
-          shadowOpacity: 1,
-          shadowRadius: 10,
+          android:{
+            padding: 15,
+            borderRadius: 50,
+            marginBottom: 10,
+            marginTop: 10,
+            marginRight: 30,
+            marginLeft: 30,
+            fontSize: 30,
+            height: 80,
+            zIndex:-1,
+            textAlign: 'center',
+            color: '#BCA37F',
+            backgroundColor: '#113946',
+            elevation: 4,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 10,
+                height: 2,
+              },
+              shadowOpacity: 1,
+              shadowRadius: 10,
+          }
+        }),
+        
       },
       devotionBodyView: {
         height:'88%',

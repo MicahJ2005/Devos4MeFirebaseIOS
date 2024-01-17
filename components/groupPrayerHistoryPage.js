@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Modal, SafeAreaView, ScrollView,  StyleSheet, Pressable, Alert,FlatList} from 'react-native';
+import {View, Text, Modal, SafeAreaView, ScrollView,  StyleSheet, Pressable, Alert,FlatList, Platform} from 'react-native';
 import { collection,  getDocs, query, where, orderBy, documentId } from "firebase/firestore";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Ionicons } from '@expo/vector-icons';
@@ -399,6 +399,9 @@ const styles = StyleSheet.create({
         color: '#BCA37F',
         backgroundColor: '#113946',
         fontSize: 30,
+        alignContent:'center',
+        justifyContent:'center',
+        zIndex:-1,
       },
       android:{
         padding: 15,
@@ -432,9 +435,9 @@ const styles = StyleSheet.create({
     ios: {
       fontSize: 12,
       color: '#C56E33',
-      marginTop: 15,
+      marginTop: 5,
       position: 'absolute',
-      right:-10,
+      // right:-20,
       zIndex:1,
     },
     android:{
@@ -449,18 +452,39 @@ const styles = StyleSheet.create({
   }),
   },
   timesPrayedBubble: {
-    backgroundColor: 'grey',
-    fontSize: 20,
-    width:80,
-    height: 30,
-    marginRight:10,
-    marginBottom: -60,
-    zIndex:1,
-    left:'75%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 60,
-    textAlign:'center'
+    ...Platform.select({
+      ios: {
+        overflow:'hidden',
+        backgroundColor: 'grey',
+        fontSize: 20,
+        width:80,
+        height: 30,
+        marginRight:-5,
+        marginTop:-25,
+        marginBottom: -60,
+        zIndex:1,
+        left:'75%',
+        // // justifyContent: 'center',
+        // // alignItems: 'center',
+        borderRadius: 15,
+        textAlign:'center'
+      },
+      android:{
+        backgroundColor: 'grey',
+        fontSize: 20,
+        width:80,
+        height: 30,
+        marginRight:10,
+        marginBottom: -60,
+        zIndex:1,
+        left:'75%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 60,
+        textAlign:'center'
+      },
+    }),
+    
   },
   prayingForText:{
     marginTop: 20,
@@ -499,25 +523,57 @@ const styles = StyleSheet.create({
       bottom:30
   },
   modalViewDetails: {
-    margin: 0,
-    height:'100%',
-    backgroundColor: '#BCA37F',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        marginTop: '10%',
+        height:'90%',
+        backgroundColor: '#BCA37F',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      android:{
+        margin: 0,
+        height:'100%',
+        backgroundColor: '#BCA37F',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      }
+    }),
+    
   },
   helpText:{
-    textAlign: 'center',
-    color: '#C56E33',
-    fontStyle: 'italic',
+    ...Platform.select({
+      ios: {
+        marginTop:'5%',
+        textAlign: 'center',
+        color: '#C56E33',
+        fontStyle: 'italic',
+      },
+      android:{
+        textAlign: 'center',
+        color: '#C56E33',
+        fontStyle: 'italic',
+      }
+    }),
+    
   },
   circleButtonDetailCloseModal: {
     width:40,
@@ -560,25 +616,52 @@ const styles = StyleSheet.create({
     top:5,
   },
   groupText:{
-    color: '#C56E33',
-    fontStyle: 'italic',
-    fontSize:20,
-    padding: 15,
-    borderRadius: 50,
-    marginRight: 10,
-    marginLeft: 10,
-    height: 60,
-    zIndex:-1,
-    textAlign: 'center',
-    backgroundColor: '#113946',
-    elevation: 4,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 10,
-        height: 2,
+    ...Platform.select({
+      ios: {
+        overflow:'hidden',
+        color: '#C56E33',
+        fontStyle: 'italic',
+        fontSize:20,
+        padding: 15,
+        borderRadius: 30,
+        marginRight: 10,
+        marginLeft: 10,
+        height: 60,
+        zIndex:-1,
+        textAlign: 'center',
+        backgroundColor: '#113946',
+        elevation: 4,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 10,
+            height: 2,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 10,
       },
-      shadowOpacity: 1,
-      shadowRadius: 10,
+      android:{
+        color: '#C56E33',
+        fontStyle: 'italic',
+        fontSize:20,
+        padding: 15,
+        borderRadius: 50,
+        marginRight: 10,
+        marginLeft: 10,
+        height: 60,
+        zIndex:-1,
+        textAlign: 'center',
+        backgroundColor: '#113946',
+        elevation: 4,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 10,
+            height: 2,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 10,
+      },
+    })
+    
   },
   lockIcon:{
     ...Platform.select({

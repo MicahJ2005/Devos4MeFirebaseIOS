@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Modal, SafeAreaView, ScrollView,  StyleSheet, Pressable,FlatList} from 'react-native';
+import {View, Text, Modal, SafeAreaView, ScrollView,  StyleSheet, Pressable,FlatList, Platform} from 'react-native';
 import { collection, getDocs, query, where,  orderBy } from "firebase/firestore";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
@@ -144,26 +144,61 @@ const styles = StyleSheet.create({
       height:'75%'
     },
     timesPrayedBubbleText:{
-      fontSize: 12,
-      color: '#C56E33',
-      marginTop: 10,
-      position: 'absolute',
-      right:-15,
-      zIndex:1,
+      ...Platform.select({
+        ios: {
+          overflow:'hidden',
+          fontSize: 12,
+          color: '#C56E33',
+          marginTop: 30,
+          position: 'absolute',
+          right:-15,
+          zIndex:1,
+        },
+        android:{
+          fontSize: 12,
+          color: '#C56E33',
+          marginTop: 10,
+          position: 'absolute',
+          right:-15,
+          zIndex:1,
+        }
+      }),
+      
     },
     timesPrayedBubble: {
-      backgroundColor: 'grey',
-      fontSize: 20,
-      width:80,
-      height: 30,
-      marginRight:10,
-      marginBottom: -60,
-      zIndex:1,
-      left:'75%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 60,
-      textAlign:'center'
+      ...Platform.select({
+        ios: {
+          overflow:'hidden',
+          backgroundColor: 'grey',
+          fontSize: 20,
+          width:80,
+          height: 30,
+          marginRight:10,
+          marginBottom: -60,
+          zIndex:1,
+          left:'75%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 15,
+          textAlign:'center',
+          // overflow:'hidden',
+        },
+        android:{
+          backgroundColor: 'grey',
+          fontSize: 20,
+          width:80,
+          height: 30,
+          marginRight:10,
+          marginBottom: -60,
+          zIndex:1,
+          left:'75%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 60,
+          textAlign:'center'
+        }
+      }),
+      
     },
     safeAreaContainer:{
       height: 375,
@@ -212,20 +247,42 @@ const styles = StyleSheet.create({
       bottom:30
     },
     modalViewDetails: {
-      margin: 0,
-      height:'100%',
-      backgroundColor: '#BCA37F',
-      borderRadius: 20,
-      padding: 35,
-      alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
+      ...Platform.select({
+        ios: {
+          margin: 0,
+          marginTop:'10%',
+          height:'90%',
+          backgroundColor: '#BCA37F',
+          borderRadius: 20,
+          padding: 35,
+          alignItems: 'center',
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 4,
+          elevation: 5,
+        },
+        android:{
+          margin: 0,
+          height:'100%',
+          backgroundColor: '#BCA37F',
+          borderRadius: 20,
+          padding: 35,
+          alignItems: 'center',
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 4,
+          elevation: 5,
+        }
+      }),
+      
     },
     helpText:{
       textAlign: 'center',
@@ -233,26 +290,53 @@ const styles = StyleSheet.create({
       fontStyle: 'italic',
     },
     item: {
-      padding: 15,
-      borderRadius: 50,
-      marginBottom: 10,
-      marginTop: 10,
-      marginRight: 30,
-      marginLeft: 30,
-      fontSize: 30,
-      height: 80,
-      zIndex:-1,
-      textAlign: 'center',
-      color: '#BCA37F',
-      backgroundColor: '#113946',
-      elevation: 4,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 10,
-          height: 2,
+      ...Platform.select({
+        ios: {
+          overflow:'hidden',
+          padding: 15,
+          borderRadius: 40,
+          marginBottom: 10,
+          marginTop: 10,
+          marginRight: 30,
+          marginLeft: 30,
+          fontSize: 30,
+          height: 80,
+          zIndex:-1,
+          textAlign: 'center',
+          color: '#BCA37F',
+          backgroundColor: '#113946',
+          elevation: 4,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 10,
+              height: 2,
+            },
+          shadowOpacity: 1,
+          shadowRadius: 10,
         },
-      shadowOpacity: 1,
-      shadowRadius: 10,
+        android:{
+          padding: 15,
+          borderRadius: 50,
+          marginBottom: 10,
+          marginTop: 10,
+          marginRight: 30,
+          marginLeft: 30,
+          fontSize: 30,
+          height: 80,
+          zIndex:-1,
+          textAlign: 'center',
+          color: '#BCA37F',
+          backgroundColor: '#113946',
+          elevation: 4,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 10,
+              height: 2,
+            },
+          shadowOpacity: 1,
+          shadowRadius: 10,
+        }
+      }),
     },
     circleButtonDetailCloseModal: {
       width:40,

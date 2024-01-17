@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Modal, SafeAreaView, ScrollView, TextInput, StyleSheet, Pressable, Alert,FlatList } from 'react-native';
+import {View, Text, Modal, SafeAreaView, ScrollView, TextInput, StyleSheet, Pressable, Alert,FlatList, Platform } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
@@ -155,6 +155,9 @@ const prayerGroups = (params) => {
 
   const openDeleteRequestModal = (item) => {
     console.log('openDeleteRequestModal item', item);
+    if(Platform.OS == 'ios'){
+      setDetailsModalVisible(false);
+    }
     setDeletePrayerRequestModalVisible(true);
   }
 
@@ -321,6 +324,10 @@ const prayerGroups = (params) => {
   const answeredPrayer = () => {
     console.log('answeredPrayer', details);
     setDetails(details);
+    console.log(Platform.OS);
+    if(Platform.OS == 'ios'){
+      setDetailsModalVisible(false)
+    }
     setAnsweredPrayerInputModalOpen(true);
   }
 
@@ -675,6 +682,20 @@ const prayerGroups = (params) => {
     return (
         <View style={styles.centeredViewPrayerList}>
           {/* START validate Delete Prayer Request Modal */}
+          {Platform == 'ios' && deletePrayerRequestModalVisible == true ?
+            <View style={styles.centeredView}>
+            <View style={styles.modalDeleteRequestView}>
+            <Pressable style={styles.circleButtonAnsweredPrayerCloseModal} onPress={() => closeDeleteRequestModal()}>
+              <MaterialIcons name="close" size={25} color="white" />
+            </Pressable>
+              <Text style={styles.answeredPrayerText}>Are you sure you want to remove this Prayer Request?</Text>
+              
+              <Pressable style={styles.circleSubmitNewRequest} onPress={() => deleteFunction()} >
+                <MaterialIcons name="delete" size={30} color="#EAD7BB" />
+              </Pressable>
+            </View>
+          </View>
+          :
           <Modal
             animationType="slide"
             transparent={true}
@@ -695,37 +716,61 @@ const prayerGroups = (params) => {
               </View>
             </View>
           </Modal>
+          }
           {/* END validate Delete Prayer Request Modal */}
 
               {/* start Delete Group Modal */}
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={deleteGroupModalVisible}
-            onRequestClose={() => {
-              setDeleteGroupModalVisible(!deleteGroupModalVisible);
-            }}>
-              <View style={styles.modalViewDetails}>
-                <View style={[styles.messageCenter]}>
-                  <Text style={[styles.requestNameText]}>
-                    Do you want to remove this Prayer Group and all the Prayer Requests tied to it?
-                  </Text>
-                  <Text style={[styles.requestNameText2]}>
-                    Note: All users will no longer have visibility to this group
-                  </Text>
-                </View>
-                   <Pressable
-                    style={[styles.closeDeleteModal]}
-                    onPress={() => closeDeleteModal()}>
-                    <Text style={styles.textStylePrayerRequest}>Cancel</Text>
-                  </Pressable>
-                  <Pressable
-                    style={[styles.deactivateGroupButton]}
-                    onPress={() => deactivateGroup()}>
-                    <Text style={styles.textStylePrayerRequest}>Remove</Text>
-                  </Pressable>
-            </View>
-          </Modal> 
+          {Platform == 'ios' && deleteGroupModalVisible == true ?
+            <View style={styles.modalViewDetails}>
+              <View style={[styles.messageCenter]}>
+                <Text style={[styles.requestNameText]}>
+                  Do you want to remove this Prayer Group and all the Prayer Requests tied to it?
+                </Text>
+                <Text style={[styles.requestNameText2]}>
+                  Note: All users will no longer have visibility to this group
+                </Text>
+              </View>
+                <Pressable
+                  style={[styles.closeDeleteModal]}
+                  onPress={() => closeDeleteModal()}>
+                  <Text style={styles.textStylePrayerRequest}>Cancel</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.deactivateGroupButton]}
+                  onPress={() => deactivateGroup()}>
+                  <Text style={styles.textStylePrayerRequest}>Remove</Text>
+                </Pressable>
+              </View>
+            :
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={deleteGroupModalVisible}
+              onRequestClose={() => {
+                setDeleteGroupModalVisible(!deleteGroupModalVisible);
+              }}>
+                <View style={styles.modalViewDetails}>
+                  <View style={[styles.messageCenter]}>
+                    <Text style={[styles.requestNameText]}>
+                      Do you want to remove this Prayer Group and all the Prayer Requests tied to it?
+                    </Text>
+                    <Text style={[styles.requestNameText2]}>
+                      Note: All users will no longer have visibility to this group
+                    </Text>
+                  </View>
+                    <Pressable
+                      style={[styles.closeDeleteModal]}
+                      onPress={() => closeDeleteModal()}>
+                      <Text style={styles.textStylePrayerRequest}>Cancel</Text>
+                    </Pressable>
+                    <Pressable
+                      style={[styles.deactivateGroupButton]}
+                      onPress={() => deactivateGroup()}>
+                      <Text style={styles.textStylePrayerRequest}>Remove</Text>
+                    </Pressable>
+              </View>
+            </Modal> 
+          }
           {/* end Delete Group Modal */}
 
           
@@ -792,49 +837,88 @@ const prayerGroups = (params) => {
           {/* end new prayer request Modal */}
     
            {/* start Answered Prayer Input Modal */}
-           <Modal
-            animationType="slide"
-            transparent={true}
-            visible={answeredPrayerInputModalOpen}
-            onRequestClose={() => {
-              setAnsweredPrayerInputModalOpen(!answeredPrayerInputModalOpen);
-            }}>
-            <View style={styles.centeredView}>
-              <View style={styles.modalAnsweredPrayerView}>
-              <Pressable style={styles.circleButtonAnsweredPrayerCloseModal} onPress={() => closeAnsweredPrayer()}>
-                <MaterialIcons name="close" size={25} color="white" />
-              </Pressable>
-                <Text style={styles.answeredPrayerText}>Prayer Request</Text>
-                <View style={styles.answeredPrayerBox}>
-                  <Text style={styles.answeredPrayerDetailText}>Request: </Text>
-                  <Text style={styles.answeredPrayerNameText}> {details.name}</Text>
-                  <Text style={styles.answeredPrayerDetailText}>Details: </Text>
-                  <Text style={styles.answeredPrayerDetailText2}>{details.details}</Text>
-                </View>
-                <Text style={styles.requestInputText}>How has God answered your prayers?</Text>
-                <TextInput
-                    style={{
-                        // height: 100,
-                        borderColor: '#113946',
-                        // borderWidth: 4,
-                        // borderRadius: 30,
-                        borderBottomWidth: 4,
-                        width:'95%',
-                        height: '30%',
-                        marginBottom: 40,
-                        
-                    }}
-                    textAlign='center'
-                    onChangeText={newAnswerText => setAnsweredPrayerText(newAnswerText)}
-                    placeholder="Answer..."
-                />
-                
-                  <Pressable style={styles.circleSubmitNewRequest} onPress={() => updateAnsweredPrayer()} >
-                    <MaterialIcons name="send" size={30} color="#EAD7BB" />
-                  </Pressable>
+           {Platform == 'ios' && answeredPrayerInputModalOpen == true ?
+           <View style={styles.centeredView}>
+            <View style={styles.modalAnsweredPrayerView}>
+            <Pressable style={styles.circleButtonAnsweredPrayerCloseModal} onPress={() => closeAnsweredPrayer()}>
+              <MaterialIcons name="close" size={25} color="white" />
+            </Pressable>
+              <Text style={styles.answeredPrayerText}>Prayer Request</Text>
+              <View style={styles.answeredPrayerBox}>
+                <Text style={styles.answeredPrayerDetailText}>Request: </Text>
+                <Text style={styles.answeredPrayerNameText}> {details.name}</Text>
+                <Text style={styles.answeredPrayerDetailText}>Details: </Text>
+                <Text style={styles.answeredPrayerDetailText2}>{details.details}</Text>
               </View>
+              <Text style={styles.requestInputText}>How has God answered your prayers?</Text>
+              <TextInput
+                  style={{
+                      // height: 100,
+                      borderColor: '#113946',
+                      // borderWidth: 4,
+                      // borderRadius: 30,
+                      borderBottomWidth: 4,
+                      width:'95%',
+                      height: '30%',
+                      marginBottom: 40,
+                      
+                  }}
+                  textAlign='center'
+                  onChangeText={newAnswerText => setAnsweredPrayerText(newAnswerText)}
+                  placeholder="Answer..."
+              />
+              
+                <Pressable style={styles.circleSubmitNewRequest} onPress={() => updateAnsweredPrayer()} >
+                  <MaterialIcons name="send" size={30} color="#EAD7BB" />
+                </Pressable>
             </View>
-          </Modal>
+          </View>
+           :
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={answeredPrayerInputModalOpen}
+                onRequestClose={() => {
+                  setAnsweredPrayerInputModalOpen(!answeredPrayerInputModalOpen);
+                }}>
+                <View style={styles.centeredView}>
+                  <View style={styles.modalAnsweredPrayerView}>
+                  <Pressable style={styles.circleButtonAnsweredPrayerCloseModal} onPress={() => closeAnsweredPrayer()}>
+                    <MaterialIcons name="close" size={25} color="white" />
+                  </Pressable>
+                    <Text style={styles.answeredPrayerText}>Prayer Request</Text>
+                    <View style={styles.answeredPrayerBox}>
+                      <Text style={styles.answeredPrayerDetailText}>Request: </Text>
+                      <Text style={styles.answeredPrayerNameText}> {details.name}</Text>
+                      <Text style={styles.answeredPrayerDetailText}>Details: </Text>
+                      <Text style={styles.answeredPrayerDetailText2}>{details.details}</Text>
+                    </View>
+                    <Text style={styles.requestInputText}>How has God answered your prayers?</Text>
+                    <TextInput
+                        style={{
+                            // height: 100,
+                            borderColor: '#113946',
+                            // borderWidth: 4,
+                            // borderRadius: 30,
+                            borderBottomWidth: 4,
+                            width:'95%',
+                            height: '30%',
+                            marginBottom: 40,
+                            
+                        }}
+                        textAlign='center'
+                        onChangeText={newAnswerText => setAnsweredPrayerText(newAnswerText)}
+                        placeholder="Answer..."
+                    />
+                    
+                      <Pressable style={styles.circleSubmitNewRequest} onPress={() => updateAnsweredPrayer()} >
+                        <MaterialIcons name="send" size={30} color="#EAD7BB" />
+                      </Pressable>
+                  </View>
+                </View>
+              </Modal>
+           }
+           
           {/* end Answered Prayer Input Modal */}
     
           {/* start prayer request details Modal */}
@@ -958,6 +1042,15 @@ const prayerGroups = (params) => {
 };
 
 const styles = StyleSheet.create({
+  buttonShowDetail:{
+    ...Platform.select({
+      ios: {
+        width:400,
+      },
+      android:{
+      }
+    }),
+  },
   bottomButtonText:{
     color:"#BCA37F",
     fontSize:20
@@ -980,7 +1073,16 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   flatListStyle:{
-    height:'85%'
+    
+    ...Platform.select({
+      ios: {
+        height:'85%',
+        // marginLeft:50,
+      },
+      android:{
+        height:'85%'
+      }
+    }),
   },
   answeredPrayerBox:{
     marginTop: 10,
@@ -1014,26 +1116,62 @@ const styles = StyleSheet.create({
     textAlign: 'left'
   },
   timesPrayedBubbleText:{
-    fontSize: 12,
-    color: '#C56E33',
-    marginTop: 15,
-    position: 'absolute',
-    right:-10,
-    zIndex:1,
+    ...Platform.select({
+      ios: {
+        // overflow:'hidden',
+        fontSize: 12,
+        color: '#C56E33',
+        marginLeft:10,
+        // marginTop: 15,
+        // position: 'absolute',
+        // right:-10,
+        zIndex:1,
+      },
+      android:{
+        
+        fontSize: 12,
+        color: '#C56E33',
+        marginTop: 15,
+        position: 'absolute',
+        right:0,
+        zIndex:1,
+      }
+    }),
   },
   timesPrayedBubble: {
-    backgroundColor: 'grey',
-    fontSize: 20,
-    width:80,
-    height: 30,
-    marginRight:10,
-    marginBottom: -60,
-    zIndex:1,
-    left:'75%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 60,
-    textAlign:'center'
+    ...Platform.select({
+      ios: {
+        overflow:'hidden',
+        backgroundColor: 'grey',
+        fontSize: 20,
+        width:80,
+        height: 30,
+        marginRight:10,
+        marginBottom: -60,
+        zIndex:1,
+        left:'75%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 20,
+        textAlign:'center'
+      },
+      android:{
+        
+        backgroundColor: 'grey',
+        fontSize: 20,
+        width:80,
+        height: 30,
+        marginRight:10,
+        marginBottom: -60,
+        zIndex:1,
+        left:'75%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 60,
+        textAlign:'center'
+      }
+    }),
+    
   },
   safeAreaContainer:{
     height: 360,
@@ -1140,19 +1278,41 @@ const styles = StyleSheet.create({
     backgroundColor: '#BCA37F',
   },
   modalView: {
-    margin: 20,
-    backgroundColor: '#FFF2D8',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        marginTop:'15%',
+        margin: 20,
+        backgroundColor: '#FFF2D8',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      android:{
+        
+        margin: 20,
+        backgroundColor: '#FFF2D8',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      }
+    }),
+   
   },
   modalAnsweredPrayerView: {
     height: '93%',
@@ -1168,41 +1328,95 @@ const styles = StyleSheet.create({
     },
   },
   modalDeleteRequestView: {
-    height: '45%',
-    margin: 20,
-    backgroundColor: '#FFF2D8',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        marginTop: '30%',
+        height: '45%',
+        margin: 20,
+        backgroundColor: '#FFF2D8',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      android:{
+        height: '45%',
+        margin: 20,
+        backgroundColor: '#FFF2D8',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      }
+    }),
+    
   },
   modalViewDetails: {
-    margin: 0,
-    height:'100%',
-    backgroundColor: '#BCA37F',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        marginTop: '10%',
+        height:'95%',
+        backgroundColor: '#BCA37F',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      android:{
+        
+        margin: 0,
+        height:'100%',
+        backgroundColor: '#BCA37F',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      }
+    }),
+    
   },
   helpText:{
-    textAlign: 'center',
-    color: '#C56E33',
-    fontStyle: 'italic',
+    ...Platform.select({
+      ios: {
+        marginLeft:'10%',
+        textAlign: 'center',
+        color: '#C56E33',
+        fontStyle: 'italic',
+      },
+      android:{
+        textAlign: 'center',
+        color: '#C56E33',
+        fontStyle: 'italic',
+      }
+    }),
   },
   backburger:{
     position:'absolute',
@@ -1211,51 +1425,93 @@ const styles = StyleSheet.create({
   },
   
   groupText:{
-    color: '#C56E33',
-    fontStyle: 'italic',
-    fontSize:20,
-    padding: 15,
-    borderRadius: 50,
-    marginRight: 10,
-    marginLeft: 10,
-    height: 60,
-    zIndex:-1,
-    textAlign: 'center',
-    backgroundColor: '#113946',
-    elevation: 4,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 10,
-        height: 2,
+    ...Platform.select({
+      ios: {
+        overflow:'hidden',
+        width:370,
+        color: '#C56E33',
+        fontStyle: 'italic',
+        fontSize:20,
+        padding: 15,
+        borderRadius: 30,
+        marginRight: 10,
+        marginLeft: 10,
+        height: 60,
+        zIndex:-1,
+        textAlign: 'center',
+        backgroundColor: '#113946',
+        marginBottom:20,
       },
-      shadowOpacity: 1,
-      shadowRadius: 10,
+      android:{
+        color: '#C56E33',
+        fontStyle: 'italic',
+        fontSize:20,
+        padding: 15,
+        borderRadius: 50,
+        marginRight: 10,
+        marginLeft: 10,
+        height: 60,
+        zIndex:-1,
+        textAlign: 'center',
+        backgroundColor: '#113946',
+        elevation: 4,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 10,
+            height: 2,
+          },
+        shadowOpacity: 1,
+        shadowRadius: 10,
+      }
+    }),
+    
   },
   textStylePrayerRequest: {
     color: '#BCA37F',
     textAlign: 'center',
   },
   item: {
-    padding: 15,
-    borderRadius: 50,
-    marginBottom: 10,
-    marginTop: 10,
-    marginRight: 30,
-    marginLeft: 30,
-    fontSize: 30,
-    height: 80,
-    zIndex:-1,
-    textAlign: 'center',
-    color:"#BCA37F",
-    backgroundColor: '#113946',
-    elevation: 4,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 10,
-        height: 2,
+    ...Platform.select({
+      ios: {
+        overflow:'hidden',
+        padding: 15,
+        borderRadius: 40,
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 30,
+        marginLeft: 30,
+        fontSize: 30,
+        height: 80,
+        zIndex:-1,
+        textAlign: 'center',
+        color:"#BCA37F",
+        backgroundColor: '#113946',
+        
       },
-      shadowOpacity: 1,
-      shadowRadius: 10,
+      android:{
+        padding: 15,
+        borderRadius: 50,
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 30,
+        marginLeft: 30,
+        fontSize: 30,
+        height: 80,
+        zIndex:-1,
+        textAlign: 'center',
+        color:"#BCA37F",
+        backgroundColor: '#113946',
+        elevation: 4,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 10,
+            height: 2,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 10,
+      }
+    }),
+    
   },
   lockIcon:{
     color:"#BCA37F",
