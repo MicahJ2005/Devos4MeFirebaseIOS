@@ -238,13 +238,28 @@ const styles = StyleSheet.create({
       fontStyle:'italic'
     },
     prayerSummaryView:{
-      borderColor: '#113946',
-      borderWidth: 4,
-      color: '#C56E33',
-      padding:20,
-      width:'100%',
-      position: 'absolute',
-      bottom:30
+      ...Platform.select({
+        ios: {
+          borderRadius:20,
+          borderColor: '#113946',
+          borderWidth: 4,
+          color: '#C56E33',
+          padding:20,
+          width:'100%',
+          position: 'absolute',
+          bottom:30
+        },
+        android:{
+          borderColor: '#113946',
+          borderWidth: 4,
+          color: '#C56E33',
+          padding:20,
+          width:'100%',
+          position: 'absolute',
+          bottom:30
+        }
+      }),
+      
     },
     modalViewDetails: {
       ...Platform.select({
