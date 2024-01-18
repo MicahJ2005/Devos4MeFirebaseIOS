@@ -234,7 +234,16 @@ const DevotionHistoryPage = (params) => {
 };
 
 const styles = StyleSheet.create({
-
+  buttonShowDetail:{
+    ...Platform.select({
+      ios: {
+        justifyContent: 'center',
+      },
+      android:{
+      
+      }
+    }),
+  },
       helpText:{
         textAlign: 'center',
         color: '#C56E33',
@@ -254,6 +263,7 @@ const styles = StyleSheet.create({
             height: 70,
             zIndex:-1,
             textAlign: 'center',
+            // justifyContent:'center',
             color: '#BCA37F',
             backgroundColor: '#113946',
             // justifyContent: 'center',

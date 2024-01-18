@@ -792,8 +792,9 @@ const prayerGroups = (params) => {
                 <TextInput
                     style={{
                         borderColor: '#113946',
+                        backgroundColor: '#FFF8DC',
                         // borderWidth: 4,
-                        // borderRadius: 30,
+                        borderRadius: 20,
                         borderBottomWidth: 4,
                         width:'95%',
                         height: '15%',
@@ -809,8 +810,9 @@ const prayerGroups = (params) => {
                     style={{
                         // height: 100,
                         borderColor: '#113946',
+                        backgroundColor: '#FFF8DC',
                         // borderWidth: 4,
-                        // borderRadius: 30,
+                        borderRadius: 20,
                         borderBottomWidth: 4,
                         width:'95%',
                         height: '55%',
@@ -898,6 +900,7 @@ const prayerGroups = (params) => {
                         style={{
                             // height: 100,
                             borderColor: '#113946',
+                            backgroundColor: '#FFF8DC',
                             // borderWidth: 4,
                             // borderRadius: 30,
                             borderBottomWidth: 4,
@@ -1046,6 +1049,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         width:400,
+        justifyContent: 'center',
       },
       android:{
       }
@@ -1085,11 +1089,26 @@ const styles = StyleSheet.create({
     }),
   },
   answeredPrayerBox:{
-    marginTop: 10,
-    width:'100%',
-    borderColor: '#113946',
-    borderWidth: 4,
-    marginBottom: 20
+    ...Platform.select({
+      ios: {
+        marginTop: 10,
+        width:'100%',
+        borderColor: '#113946',
+        borderWidth: 4,
+        marginBottom: 20,
+        borderRadius:20,
+        backgroundColor:'#FFF8DC'
+      },
+      android:{
+        marginTop: 10,
+        width:'100%',
+        borderColor: '#113946',
+        borderWidth: 4,
+        marginBottom: 20,
+        borderRadius:20
+      }
+    }),
+    
   },
   answeredPrayerDetailText:{
     fontSize:15,
@@ -1315,17 +1334,36 @@ const styles = StyleSheet.create({
    
   },
   modalAnsweredPrayerView: {
-    height: '93%',
-    margin: 20,
-    backgroundColor: '#FFF2D8',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    ...Platform.select({
+      ios: {
+        marginTop:'15%',
+        height: '85%',
+        margin: 20,
+        backgroundColor: '#FFF2D8',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+      },
+      android:{
+        height: '93%',
+        margin: 20,
+        backgroundColor: '#FFF2D8',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+      }
+    }),
+    
   },
   modalDeleteRequestView: {
     ...Platform.select({
@@ -1486,7 +1524,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color:"#BCA37F",
         backgroundColor: '#113946',
-        
+        justifyContent: 'center',
       },
       android:{
         padding: 15,

@@ -92,7 +92,7 @@ const personalDevotionPage = (devoTypeselected) => {
                 console.log("this is the result devotionTitle", jsonTitle.choices[0].message.content);
                 if(jsonTitle.choices[0].message.content != null){
                     console.log("MADE IT TO THE DEVO WRITTING with title: ", jsonTitle.choices[0].message.content);
-                    let contentToSend = `"Write a brief personal devotional for ${params.runningUser.firstname}, based on the title ${jsonTitle.choices[0].message.content} and scripture ${jsonScripture.choices[0].message.content}, with a relevant analogy. Try not to use any form of the word 'embrace' and do not add '[Your Name]', or any salutation, at the end"`;
+                    let contentToSend = `"Write a brief personal devotional for ${params.runningUser.firstname}, based on the title ${jsonTitle.choices[0].message.content} and scripture ${jsonScripture.choices[0].message.content}, with a relevant analogy. Try not to use any form of the word 'embrace' and do NOT add '[Your Name]', or any salutation, at the end"`;
                     const response = await fetch("https://api.openai.com/v1/chat/completions", {
                         method: "POST",
                         headers: {

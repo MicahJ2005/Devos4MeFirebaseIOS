@@ -376,6 +376,7 @@ const styles = StyleSheet.create({
         height: 80,
         zIndex:-1,
         textAlign: 'center',
+        justifyContent:'center',
         color: '#BCA37F',
         backgroundColor: '#113946',
         elevation: 4,
@@ -400,7 +401,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#113946',
         fontSize: 30,
         alignContent:'center',
-        justifyContent:'center',
+        // justifyContent:'center',
         zIndex:-1,
       },
       android:{
@@ -460,7 +461,7 @@ const styles = StyleSheet.create({
         width:80,
         height: 30,
         marginRight:-5,
-        marginTop:-25,
+        marginTop:-30,
         marginBottom: -60,
         zIndex:1,
         left:'75%',
@@ -515,6 +516,7 @@ const styles = StyleSheet.create({
   },
   prayerSummaryView:{
       borderColor: '#113946',
+      borderRadius: 20,
       borderWidth: 4,
       color: '#C56E33',
       padding:20,

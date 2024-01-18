@@ -39,6 +39,14 @@ const AboutPage = (devoTypeselected) => {
               <Text style={styles.homeText2}>
                   Our prayer is that this tool helps you grow in your walk with Christ as you enjoy daily devotions and praying for others.  
               </Text>
+
+              {'\n'}
+              {'\n'}
+              {'\n'}
+              {'\n'}
+              <Text style={styles.homeText2}>
+                  * Devos4Me creates personalized devotions by utilizing various technologies and users may have varied experiences. Please contact us if you experience issues or have concerns.  
+              </Text>
             </Text>
           </View>
           

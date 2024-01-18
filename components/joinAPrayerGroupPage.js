@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Modal,  TextInput,  StyleSheet, Pressable, Alert,FlatList,  SafeAreaView } from 'react-native';
+import {View, Text, Modal,  TextInput,  StyleSheet, Pressable, Alert,FlatList,  SafeAreaView, Platform } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import {  collection,  getDocs, query, where,  addDoc,  } from "firebase/firestore";
 
@@ -134,14 +134,14 @@ const JoinPrayerGroup = (params) => {
                 <Text style={{color: 'grey',fontSize:20}}>Public Groups</Text>
               </Pressable>
               <Pressable style={styles.privateButtonSelected} onPress={() => setPrivateGroup()}>
-                <Text style={{color: '#C56E33', fontSize:20, fontWeight:'bold', marginRight:20}}>Private Groups</Text>
+                <Text style={styles.privateGroupText}>Private Groups</Text>
                 <MaterialIcons name="check-circle-outline" size={25} color="green" />
               </Pressable>
             </View>
             :
             <View style={styles.publicOrPrivateButtons}>
               <Pressable style={styles.publicButtonSelected} onPress={() => setPublicGroup()}>
-                <Text style={{color: '#C56E33',fontSize:20, fontWeight:'bold', marginRight:20}}>Public Groups</Text>
+                <Text style={styles.publicGroupText}>Public Groups</Text>
                 <MaterialIcons name="check-circle-outline" size={25} color="green" />
               </Pressable>
               <Pressable style={styles.privateButtonNotSelected} onPress={() => setPrivateGroup()}>
@@ -241,46 +241,127 @@ const JoinPrayerGroup = (params) => {
 }
 
 const styles = StyleSheet.create({
-  item: {
-    padding: 15,
-    borderRadius: 50,
-    marginBottom: 10,
-    marginTop: 10,
-    marginRight: 30,
-    marginLeft: 30,
-    fontSize: 30,
-    height: 80,
-    zIndex:-1,
-    textAlign: 'center',
-    color: '#BCA37F',
-    backgroundColor: '#113946',
-    elevation: 4,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 10,
-        height: 2,
+  privateGroupText:{
+    ...Platform.select({
+      ios: {
+        color: '#C56E33', 
+        fontSize:20, 
+        fontWeight:'bold', 
+        marginRight:10
       },
-      shadowOpacity: 1,
-      shadowRadius: 10,
+      android:{
+        color: '#C56E33', 
+        fontSize:20, 
+        fontWeight:'bold', 
+        marginRight:20
+      }
+    }),
+  },
+  publicGroupText:{
+    ...Platform.select({
+      ios: {
+        color: '#C56E33', 
+        fontSize:20, 
+        fontWeight:'bold', 
+        marginRight:10
+      },
+      android:{
+        color: '#C56E33', 
+        fontSize:20, 
+        fontWeight:'bold', 
+        marginRight:20
+      }
+    }),
+  },
+  item: {
+    ...Platform.select({
+      ios: {
+        overflow:'hidden',
+        padding: 15,
+        borderRadius: 40,
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 30,
+        marginLeft: 30,
+        fontSize: 30,
+        height: 80,
+        zIndex:-1,
+        textAlign: 'center',
+        color: '#BCA37F',
+        backgroundColor: '#113946',
+        elevation: 4,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 10,
+            height: 2,
+          },
+        shadowOpacity: 1,
+        shadowRadius: 10,
+      },
+      android:{
+        padding: 15,
+        borderRadius: 50,
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 30,
+        marginLeft: 30,
+        fontSize: 30,
+        height: 80,
+        zIndex:-1,
+        textAlign: 'center',
+        color: '#BCA37F',
+        backgroundColor: '#113946',
+        elevation: 4,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 10,
+            height: 2,
+          },
+        shadowOpacity: 1,
+        shadowRadius: 10,
+      },
+    }),
+    
   },
     flatListStyle:{
       height:'55%',
       marginTop:-65
     },
     modalView: {
-      margin: 20,
-      backgroundColor: '#FFF2D8',
-      borderRadius: 20,
-      padding: 35,
-      alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
+      ...Platform.select({
+        ios: {
+          marginTop:'15%',
+          margin: 20,
+          backgroundColor: '#FFF2D8',
+          borderRadius: 20,
+          padding: 35,
+          alignItems: 'center',
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 4,
+          elevation: 5,
+        },
+        android:{
+          margin: 20,
+          backgroundColor: '#FFF2D8',
+          borderRadius: 20,
+          padding: 35,
+          alignItems: 'center',
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 4,
+          elevation: 5,
+        },
+      }),
+      
     },
     circleButtonDetailCloseModal2: {
       width:40,
@@ -347,24 +428,49 @@ const styles = StyleSheet.create({
       shadowRadius: 4,
     },
     circleAddToGroup: {
-      width:70,
-      height: 70,
-      margin:10,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 42,
-      backgroundColor: '#113946',
-      // position: 'absolute',
-      right:-140,
-      bottom: -30,
-      elevation: 15,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 2,
-        height: 4,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
+      ...Platform.select({
+        ios: {
+          width:70,
+          height: 70,
+          margin:10,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 42,
+          backgroundColor: '#113946',
+          // position: 'absolute',
+          right:-120,
+          bottom: -30,
+          elevation: 15,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 2,
+            height: 4,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 4,
+        },
+        android:{
+          width:70,
+          height: 70,
+          margin:10,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 42,
+          backgroundColor: '#113946',
+          // position: 'absolute',
+          right:-140,
+          bottom: -30,
+          elevation: 15,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 2,
+            height: 4,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 4,
+        },
+      }),
+      
     },
     publicOrPrivateButtons:{
       display: 'inline',

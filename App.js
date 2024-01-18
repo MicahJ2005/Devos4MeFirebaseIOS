@@ -859,7 +859,7 @@ export default function App() {
               {'\n'}
               {'\n'}
               <Text style={styles.homeText2}>
-                {runningUser.firstname}, may God richly bless you as you grow in your walk with Him
+                {runningUser.firstname}, may God richly bless you as you grow in your relationship with Him
               </Text>
               {'\n'}
             </Text>
@@ -1160,7 +1160,7 @@ export default function App() {
                 <Text style={styles.myPrayerListPressableTextNavigation}>Resources</Text>
               </Pressable>
               <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => navigateAbout()}>
-                <Text style={styles.myPrayerListPressableTextNavigation}>About/Contact</Text>
+                <Text style={styles.myPrayerListPressableTextNavigation}>About/Contact Us</Text>
               </Pressable>
               <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => logout()}>
                 <Text style={styles.myPrayerListPressableTextNavigation}>Logout</Text>
@@ -1350,7 +1350,7 @@ export default function App() {
                     }}
                     textAlign='center'
                     onChangeText={newText => setText(newText)}
-                    placeholder="Write feedback and click below to send"
+                    placeholder="Write feedback and click below open email send"
                     value={text}
                 />
                 <Pressable style={styles.circleSubmitNewRequest} onPress={() => sendFeedback()}>
@@ -1625,25 +1625,47 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   myDailyDevotionPressable: {
-    borderRadius: 10,
-    backgroundColor: '#113946',
-    padding: 20,
-    elevation: 2,
-    width:'45%',
-    marginEnd: '10%',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    ...Platform.select({
+      ios: {
+        borderRadius: 30,
+        marginTop:40,
+        marginLeft:'5%',
+        backgroundColor: '#113946',
+        padding: 20,
+        elevation: 2,
+        width:'90%',
+        marginEnd: '10%',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+      },
+      android:{
+        borderRadius: 10,
+        backgroundColor: '#113946',
+        padding: 20,
+        elevation: 2,
+        width:'45%',
+        marginEnd: '10%',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+      }
+    }),
+    
   },
   myPrayerListPressable: {
     ...Platform.select({
       ios: {
-        borderRadius: 10,
+        borderRadius: 30,
+        marginTop:10,
+        marginLeft:'5%',
         backgroundColor: '#113946',
-        width:'45%',
         padding: 20,
         elevation: 2,
+        width:'90%',
+        marginEnd: '10%',
         shadowOffset: {
           width: 0,
           height: 2,
@@ -1705,9 +1727,10 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         // position: 'absolute',
-        // bottom:35,
-        display: 'inline',
-        flexDirection: 'row',
+        // bottom:45,
+        // display: 'inline',
+        // flexDirection: 'row',
+        zindex:1,
         margin: 10,
       },
       android:{
@@ -2001,19 +2024,40 @@ const styles = StyleSheet.create({
     height:'65%',
   },
   modalView: {
-    margin: 20,
-    backgroundColor: '#FFF2D8',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        marginTop:'15%',
+        margin: 20,
+        backgroundColor: '#FFF2D8',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      android:{
+        margin: 20,
+        backgroundColor: '#FFF2D8',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      }
+    }),
+   
   },
   circleButtonDetailCloseModal2: {
     width:40,
