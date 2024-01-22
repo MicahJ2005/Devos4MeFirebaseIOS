@@ -543,7 +543,7 @@ export default function App() {
     else if(page === 'register'){
       return (
         <View style={[styles.registerPageHeader]}>
-          <View style={[styles.registerHeaderIcons]}>
+          <View style={[styles.homeHeaderIcons]}>
           <Pressable onPress={() => logout()} >
                 <MaterialIcons style={[styles.homeIcon]} name="home" size={30} color="black" />
             </Pressable>
@@ -1570,10 +1570,21 @@ const styles = StyleSheet.create({
    
   },
   tinyLogoRegister: {
-    width: 400,
-    height: 170,
-    marginTop: 55,
-    marginLeft: 5,
+    ...Platform.select({
+      ios: {
+        width: 380,
+        height: 170,
+        marginTop: 70,
+        marginLeft: 5,
+      },
+      android:{
+        width: 400,
+        height: 170,
+        marginTop: 55,
+        marginLeft: 5,
+      }
+    }),
+    
   },
   tinyLogoDevotions: {
     width: 120,
