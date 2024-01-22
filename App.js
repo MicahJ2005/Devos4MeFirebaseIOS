@@ -1574,8 +1574,8 @@ const styles = StyleSheet.create({
       ios: {
         width: 380,
         height: 170,
-        marginTop: 70,
-        marginLeft: 5,
+        marginTop: 60,
+        // marginLeft: 5,
       },
       android:{
         width: 400,
@@ -1849,7 +1849,8 @@ const styles = StyleSheet.create({
   homeHeaderIcons:{
     ...Platform.select({
       ios: {
-        marginTop:50
+        //maybe just for testing with a header
+        // marginTop:50
       },
     }),
     // marginTop:30,
