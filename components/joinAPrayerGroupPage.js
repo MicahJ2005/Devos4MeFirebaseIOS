@@ -278,6 +278,7 @@ const styles = StyleSheet.create({
       ios: {
         overflow:'hidden',
         padding: 15,
+        paddingTop: 20,
         borderRadius: 40,
         marginBottom: 10,
         marginTop: 10,

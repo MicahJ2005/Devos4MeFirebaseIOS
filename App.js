@@ -1072,7 +1072,7 @@ export default function App() {
                 source={logo}
               />
             </Pressable>
-            <Text style={[styles.myPrayerClosetText]}>Join A Prayer Group
+            <Text style={[styles.joinAPrayerGroupText]}>Join A Prayer Group
               
             </Text>
           </View>
@@ -1686,11 +1686,21 @@ const styles = StyleSheet.create({
     
   },
   myDailyDevotionPressableText: {
-    color: '#EAD7BB',
-    backgroundColor: '#113946',
-    textAlign: 'center',
-    fontSize: 15,
     
+    ...Platform.select({
+      ios: {
+        color: '#EAD7BB',
+        backgroundColor: '#113946',
+        textAlign: 'center',
+        fontSize: 25,
+      },
+      android:{
+        color: '#EAD7BB',
+        backgroundColor: '#113946',
+        textAlign: 'center',
+        fontSize: 15,
+      }
+    }),
   },
   myPrayerListPressableText: {
     ...Platform.select({
@@ -1698,7 +1708,7 @@ const styles = StyleSheet.create({
         color: '#EAD7BB',
         backgroundColor: '#113946',
         textAlign: 'center',
-        fontSize: 15,
+        fontSize: 25,
       },
       android:{
          color: '#EAD7BB',
@@ -1773,6 +1783,27 @@ const styles = StyleSheet.create({
     marginRight:10,
     color: '#C56E33',
     paddingTop: 20,
+  },
+  joinAPrayerGroupText:{
+    ...Platform.select({
+      ios: {
+        
+        fontSize:30,
+        textAlign:'right',
+        marginLeft:5,
+        marginRight:10,
+        color: '#C56E33',
+        paddingTop: 20,
+      },
+      android:{
+        fontSize:30,
+        textAlign:'right',
+        marginLeft:10,
+        marginRight:10,
+        color: '#C56E33',
+        paddingTop: 20,
+      }
+    }),
   },
   myNavigationMenuText:{
     fontSize:30,
