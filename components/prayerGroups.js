@@ -1019,17 +1019,30 @@ const prayerGroups = (params) => {
                   <View style={[styles.nameView]}> 
                     <View>
                         <Text style={[styles.timesPrayedBubble]}>{item.timesprayed}
-                        <View>
-                        <Text style={[styles.timesPrayedBubbleText]}>Prayed</Text>
-                        </View>
-                        </Text>
+                        
+                          {Platform.OS == 'ios' ?
+                          ''
+                          :
+                          <View>
+                            <Text style={[styles.timesPrayedBubbleText]}>Prayed</Text>
+                          </View>
+                        }
+                      </Text>
                     </View>
                       
                       
                       <Text style={styles.item} key={item.Id}>{item.name}
                         
                       </Text>
+                      
                   </View>
+                  {Platform.OS == 'ios' ?
+                           <View>
+                            <Text style={[styles.timesPrayedBubbleText]}>Prayed</Text>
+                          </View>
+                          :
+                         ''
+                          }
                 </Pressable>
               }
             />
@@ -1140,10 +1153,11 @@ const styles = StyleSheet.create({
         // overflow:'hidden',
         fontSize: 12,
         color: '#C56E33',
-        marginLeft:10,
+        // marginLeft:10,
         // marginTop: 15,
-        // position: 'absolute',
-        // right:-10,
+        position: 'absolute',
+        right:35,
+        top: -70,
         zIndex:1,
       },
       android:{
@@ -1171,7 +1185,7 @@ const styles = StyleSheet.create({
         left:'75%',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 20,
+        borderRadius: 15,
         textAlign:'center'
       },
       android:{

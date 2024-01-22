@@ -124,12 +124,24 @@ const PrayerHistoryPage = (params) => {
                                   onPress={() => showDetails(item)}>
                 <View>
                     <Text style={[styles.timesPrayedBubble]}>{item.timesprayed}
+                    {Platform.OS == 'ios' ?
+                    ''
+                    :
                     <View>
                       <Text style={[styles.timesPrayedBubbleText]}>Answered</Text>
                     </View>
+                  }
+                    
                     </Text>
                 </View>
                 <Text style={styles.item} key={item.id}>{item.name}</Text>
+                {Platform.OS == 'ios' ?
+                    <View>
+                      <Text style={[styles.timesPrayedBubbleText]}>Answered</Text>
+                    </View>
+                    :
+                    ''
+                  }
           </Pressable>
         }
       />
@@ -146,12 +158,11 @@ const styles = StyleSheet.create({
     timesPrayedBubbleText:{
       ...Platform.select({
         ios: {
-          overflow:'hidden',
           fontSize: 12,
           color: '#C56E33',
-          marginTop: 30,
           position: 'absolute',
-          right:-15,
+          top: -70,
+          right:30,
           zIndex:1,
         },
         android:{
@@ -310,6 +321,7 @@ const styles = StyleSheet.create({
           overflow:'hidden',
           padding: 15,
           borderRadius: 40,
+          paddingTop: 20,
           marginBottom: 10,
           marginTop: 10,
           marginRight: 30,

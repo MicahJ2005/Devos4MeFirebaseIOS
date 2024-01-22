@@ -302,9 +302,14 @@ const GroupPrayerHistoryPage = (params) => {
               {/* <View style={[styles.nameView]}> */}
                   <View>
                       <Text style={[styles.timesPrayedBubble]}>{item.timesprayed}
+                      {Platform.OS == 'ios' ?
+                      ''
+                      :  
                       <View>
                         <Text style={[styles.timesPrayedBubbleText]}>Answered</Text>
                       </View>
+                    }
+                      
                       </Text>
                       
                   </View>
@@ -317,7 +322,13 @@ const GroupPrayerHistoryPage = (params) => {
                   
                   
               {/* </View> */}
-              
+              {Platform.OS == 'ios' ?
+                      <View>
+                        <Text style={[styles.timesPrayedBubbleText]}>Answered</Text>
+                      </View>
+                      :  
+                      ''
+                    }
             </Pressable>
           }
         />
@@ -438,7 +449,8 @@ const styles = StyleSheet.create({
       color: '#C56E33',
       marginTop: 5,
       position: 'absolute',
-      // right:-20,
+      right:-10,
+      top: -40,
       zIndex:1,
     },
     android:{
@@ -464,7 +476,7 @@ const styles = StyleSheet.create({
         marginTop:-30,
         marginBottom: -60,
         zIndex:1,
-        left:'75%',
+        left:'80%',
         // // justifyContent: 'center',
         // // alignItems: 'center',
         borderRadius: 15,
