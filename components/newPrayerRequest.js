@@ -699,15 +699,9 @@ const styles = StyleSheet.create({
       android:{
         fontSize: 12,
         color: '#C56E33',
-<<<<<<< HEAD
-        marginTop: 35,
-        position: 'absolute',
-        right:15,
-=======
         marginTop: 60,
         position: 'absolute',
         right:45,
->>>>>>> master
       }
     }),
     
