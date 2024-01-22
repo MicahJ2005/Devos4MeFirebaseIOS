@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "Devos4Me",
+    "slug": "Devos4Me",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/logo-color.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/logo-no-background.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#EAD7BB"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jjmjnjajcj2023.Devos4Me"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo-color.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.jjmjnjajcj2023.Devos4Me"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c38569b4-1e7f-40a4-8486-4993d72de78c"
+      }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          },
+          "ios": {}
+        }
+      ]
+    ]
+  }
+}
