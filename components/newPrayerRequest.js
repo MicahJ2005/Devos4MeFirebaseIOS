@@ -699,9 +699,15 @@ const styles = StyleSheet.create({
       android:{
         fontSize: 12,
         color: '#C56E33',
+<<<<<<< HEAD
         marginTop: 35,
         position: 'absolute',
         right:15,
+=======
+        marginTop: 60,
+        position: 'absolute',
+        right:45,
+>>>>>>> master
       }
     }),
     
@@ -866,21 +872,43 @@ const styles = StyleSheet.create({
   },
   
   modalViewDetails: {
-    margin: 0,
-    marginTop:'10%',
-    height:'95%',
-    backgroundColor: '#BCA37F',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        margin: 0,
+        marginTop:'10%',
+        height:'95%',
+        backgroundColor: '#BCA37F',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      android:{
+        margin: 0,
+        // marginTop:'10%',
+        height:'99%',
+        backgroundColor: '#BCA37F',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      }
+    }),
+   
   },
   helpText:{
     ...Platform.select({

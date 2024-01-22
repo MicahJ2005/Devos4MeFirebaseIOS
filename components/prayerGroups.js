@@ -1164,9 +1164,9 @@ const styles = StyleSheet.create({
         
         fontSize: 12,
         color: '#C56E33',
-        marginTop: 15,
+        marginTop: 10,
         position: 'absolute',
-        right:0,
+        right:-10,
         zIndex:1,
       }
     }),

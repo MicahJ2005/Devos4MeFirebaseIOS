@@ -457,9 +457,9 @@ const styles = StyleSheet.create({
       
       fontSize: 12,
       color: '#C56E33',
-      marginTop: 15,
+      marginTop: 10,
       position: 'absolute',
-      right:-10,
+      right:-20,
       zIndex:1,
     },
   }),

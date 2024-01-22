@@ -261,6 +261,7 @@ const styles = StyleSheet.create({
           bottom:30
         },
         android:{
+          borderRadius:20,
           borderColor: '#113946',
           borderWidth: 4,
           color: '#C56E33',
