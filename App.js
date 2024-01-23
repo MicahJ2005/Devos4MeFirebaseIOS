@@ -1853,6 +1853,7 @@ const styles = StyleSheet.create({
         // marginTop:50
       },
     }),
+    //maybe just for testing with a header
     // marginTop:30,
     backgroundColor: '#113946',
     height: 50,
@@ -1892,7 +1893,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
+    // marginTop: 22,
     backgroundColor: '#BCA37F',
   },
   loginPageLoginButtons:{
