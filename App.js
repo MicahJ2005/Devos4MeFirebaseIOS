@@ -9,6 +9,7 @@ import ResourcesPage from './components/resourcesPage';
 import PrayerGroup from './components/prayerGroups';
 import JoinAPrayerGroup from './components/joinAPrayerGroupPage';
 import DevotionHistoryPage from './components/devotionHistoryPage';
+import ExampleDevotion from './components/exampleDevotionPage';
 import React, {useState, useEffect} from 'react';
 import logo from './assets/logo-no-background.png';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -30,6 +31,8 @@ class userDataWrapper {
       this.securityquestion = data.securityquestion;
       this.securityanswer = data.securityanswer;
       this.createddate = data.createddate;
+      this.isPaidUser = data.isPaidUser;
+      this.subscriptionId = data.subscriptionId;
       this.active = data.active;
   }
 }
@@ -69,6 +72,7 @@ export default function App() {
   const [currentSecurityAnswer, setCurrentSecurityAnswer] = useState('');
   const [currentSecurityQuestion, setCurrentSecurityQuestion] = useState('');
 
+  const [isPaidUser, setIsPaidUser] = useState(false);
  
 
 
@@ -249,6 +253,7 @@ export default function App() {
         console.log('USER signed in: ', doc.id, " => ", doc.data());
         userwrapped = new userDataWrapper(doc.id, doc.data());
         setRunningUser(userwrapped);
+        setIsPaidUser(userwrapped.isPaidUser);
         setPage('home');
       });
     }else{
@@ -435,7 +440,7 @@ export default function App() {
     console.log('Feedback text: ', text);
     console.log('Feedback user: ', runningUser);
     sendEmail(
-      'micahj2005@hotmail.com',
+      'Devos4Me@gmail.com',
       `User Feedback from User ${runningUser.firstname} ${runningUser.lastname} , email: ${runningUser.username}  `,
       text,
       { }
@@ -450,6 +455,15 @@ export default function App() {
     console.log('Your message was successfully sent!');
     Alert.alert('Issue Sending Feedback');
   });
+  }
+
+  const paidMessageModal = () => {
+    Alert.alert('This feature is availible with a paid subscription')
+  }
+
+  const exampleDailyDevotion = () => {
+    console.log('in exampleDailyDevotion');
+    setPage('exampleDevotion');
   }
 
   if(loading){
@@ -865,9 +879,25 @@ export default function App() {
             </Text>
           </View>
           <View style={styles.homeButtonContainer}>
-            <Pressable style={styles.myDailyDevotionPressable} onPress={() => openDevoTypeSelector()}>
-              <Text style={styles.myDailyDevotionPressableText}>My Daily Devotion</Text>
-            </Pressable>
+          {isPaidUser ? 
+               ''
+                :
+                
+                <Pressable style={styles.myDailyDevotionExamplePressable} onPress={() => exampleDailyDevotion()}>
+                  <Text style={styles.myDailyDevotionPressableText}>Example Daily Devotion</Text>
+                </Pressable>
+              } 
+            {isPaidUser ? 
+                <Pressable style={styles.myDailyDevotionPressable} onPress={() => openDevoTypeSelector()}>
+                  <Text style={styles.myDailyDevotionPressableText}>My Daily Devotion</Text>
+                </Pressable>
+                :
+                
+                <Pressable style={styles.myDailyDevotionPressableDisabled} onPress={() => paidMessageModal()}>
+                  <Text style={styles.myDailyDevotionPressableTextDisabled}>My Daily Devotion</Text>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabledPaid}>Paid Feature</Text>
+                </Pressable>
+              } 
             <Pressable style={styles.myPrayerListPressable} onPress={() => navigateToPrayerList()}>
               <Text style={styles.myPrayerListPressableText}>My Prayer List</Text>
             </Pressable>
@@ -1003,6 +1033,30 @@ export default function App() {
         </View>
       );
     }
+    else if(page === 'exampleDevotion'){
+      return (
+        <View style={styles.scrollView}>
+          <View style={[styles.homeHeaderIcons]}>
+            <Pressable onPress={() => navigateHome()} >
+                <MaterialIcons style={[styles.homeIcon]} name="home" size={30} color="black" />
+            </Pressable>
+            <Pressable onPress={() => openMenu()} >
+                <MaterialIcons style={[styles.homeMenuIcon]} name="menu" size={0} color="black" />
+            </Pressable>
+          </View>
+          <View style={styles.prayerListHeader}>
+            <Pressable onPress={() => navigateHome()}>
+              <Image
+                style={styles.tinyLogoDevotions}
+                source={logo}
+              />
+            </Pressable>
+            <Text style={[styles.myPrayerClosetText]}>My Daily Bread</Text>
+          </View>
+          <ExampleDevotion runningUser={runningUser} ></ExampleDevotion>
+        </View>
+      );
+    }
     else if(page === 'familyDevotions'){
       return (
         <View style={styles.scrollView}>
@@ -1132,30 +1186,72 @@ export default function App() {
               <Pressable style={styles.myDailyDevotionPressableNavigation} onPress={() => navigateHome()}>
                 <Text style={styles.myDailyDevotionPressableTextNavigation}>Home</Text>
               </Pressable>
-              <Pressable style={styles.myDailyDevotionPressableNavigation} onPress={() => openDevoTypeSelector()}>
-                <Text style={styles.myDailyDevotionPressableTextNavigation}>My Daily Devotion</Text>
-              </Pressable>
-              <Pressable style={styles.myDailyDevotionPressableNavigation} onPress={() => openFamilyDevoTypeSelector()}>
-                <Text style={styles.myDailyDevotionPressableTextNavigation}>Family Devotion</Text>
-              </Pressable>
-              <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => navigateToDevotionHistory()}>
-                <Text style={styles.myPrayerListPressableTextNavigation}>Previous Devotions</Text>
-              </Pressable>
+              {isPaidUser ? 
+                <Pressable style={styles.myDailyDevotionPressableNavigation} onPress={() => openDevoTypeSelector()}>
+                  <Text style={styles.myDailyDevotionPressableTextNavigation}>My Daily Devotion</Text>
+                </Pressable>
+                :
+                <Pressable style={styles.myDailyDevotionPressableNavigationDisabled} onPress={() => paidMessageModal()}>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabled}>My Daily Devotion</Text>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabledPaid}>Paid Feature</Text>
+                </Pressable>
+              } 
+              {isPaidUser ? 
+                <Pressable style={styles.myDailyDevotionPressableNavigation} onPress={() => openFamilyDevoTypeSelector()}>
+                  <Text style={styles.myDailyDevotionPressableTextNavigation}>Family Devotion</Text>
+                </Pressable>
+                :
+                <Pressable style={styles.myDailyDevotionPressableNavigationDisabled} onPress={() => paidMessageModal()}>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabled}>Family Devotion</Text>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabledPaid}>Paid Feature</Text>
+                </Pressable>
+              }
+              {isPaidUser ? 
+                <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => navigateToDevotionHistory()}>
+                  <Text style={styles.myPrayerListPressableTextNavigation}>Previous Devotions</Text>
+                </Pressable>
+                :
+                <Pressable style={styles.myDailyDevotionPressableNavigationDisabled} onPress={() => paidMessageModal()}>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabled}>Previous Devotions</Text>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabledPaid}>Paid Feature</Text>
+                </Pressable>
+              }
               <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => navigateToPrayerList()}>
                 <Text style={styles.myPrayerListPressableTextNavigation}>My Prayer List</Text>
               </Pressable>
               <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => navigateHistory()}>
                 <Text style={styles.myPrayerListPressableTextNavigation}>My Answered Prayers</Text>
               </Pressable>
-              <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => navigateToPrayerGroups()}>
-                <Text style={styles.myPrayerListPressableTextNavigation}>My Prayer Groups</Text>
-              </Pressable>
-              <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => navigateGroupHistory()}>
-                <Text style={styles.myPrayerListPressableTextNavigation}>Group Answered Prayers</Text>
-              </Pressable>
-              <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => navigateToJoinPrayerGroups()}>
-                <Text style={styles.myPrayerListPressableTextNavigation}>Join A Prayer Group</Text>
-              </Pressable>
+              {isPaidUser ? 
+                <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => navigateToPrayerGroups()}>
+                  <Text style={styles.myPrayerListPressableTextNavigation}>My Prayer Groups</Text>
+                </Pressable>
+                :
+                <Pressable style={styles.myDailyDevotionPressableNavigationDisabled} onPress={() => paidMessageModal()}>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabled}>My Prayer Groups</Text>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabledPaid}>Paid Feature</Text>
+                </Pressable>
+              }
+              {isPaidUser ? 
+                <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => navigateGroupHistory()}>
+                  <Text style={styles.myPrayerListPressableTextNavigation}>Group Answered Prayers</Text>
+                </Pressable>
+                :
+                <Pressable style={styles.myDailyDevotionPressableNavigationDisabled} onPress={() => paidMessageModal()}>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabled}>Group Answered Prayers</Text>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabledPaid}>Paid Feature</Text>
+                </Pressable>
+              }
+              {isPaidUser ? 
+                <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => navigateToJoinPrayerGroups()}>
+                  <Text style={styles.myPrayerListPressableTextNavigation}>Join A Prayer Group</Text>
+                </Pressable>
+                :
+                <Pressable style={styles.myDailyDevotionPressableNavigationDisabled} onPress={() => paidMessageModal()}>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabled}>Join A Prayer Group</Text>
+                  <Text style={styles.myDailyDevotionPressableTextNavigationDisabledPaid}>Paid Feature</Text>
+                </Pressable>
+              }
               <Pressable style={styles.myPrayerListPressableNavigation} onPress={() => navigateResources()}>
                 <Text style={styles.myPrayerListPressableTextNavigation}>Resources</Text>
               </Pressable>
@@ -1512,6 +1608,80 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 25,
   },
+  myDailyDevotionPressableNavigationDisabled:{
+    ...Platform.select({
+      ios: {
+        width: '90%',
+        borderRadius: 42,
+        backgroundColor: '#113946',
+        padding: 20,
+        elevation: 2,
+        marginLeft: '5%',
+        marginBottom:10,
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        opacity:.4
+      },
+      android:{
+        width: '90%',
+        borderRadius: 42,
+        backgroundColor: '#113946',
+        padding: 20,
+        elevation: 2,
+        marginLeft: '5%',
+        marginBottom:10,
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        opacity:.4
+      }
+    }),
+    
+  },
+  myDailyDevotionPressableTextNavigationDisabled:{
+    ...Platform.select({
+      ios: {
+        color: '#EAD7BB',
+        // backgroundColor: '#113946',
+        textAlign: 'center',
+        fontSize: 25,
+        opacity:.8
+      },
+      android:{
+        color: '#EAD7BB',
+        // backgroundColor: '#113946',
+        textAlign: 'center',
+        fontSize: 25,
+        opacity:.8
+      }
+    }),
+   
+  },
+  myDailyDevotionPressableTextNavigationDisabledPaid:{
+    ...Platform.select({
+      ios: {
+        color: 'black',
+        // backgroundColor: '#113946',
+        textAlign: 'center',
+        fontSize: 15,
+        marginBottom: -10,
+        opacity:1
+      },
+      android:{
+        color: 'black',
+        // backgroundColor: '#113946',
+        textAlign: 'center',
+        fontSize: 15,
+        marginBottom: -15,
+        marginTop: -2,
+        opacity: 1
+      }
+    }),
+    
+  },
   myPrayerListPressableNavigation:{
     width: '90%',
     borderRadius: 42,
@@ -1652,16 +1822,87 @@ const styles = StyleSheet.create({
         },
       },
       android:{
-        borderRadius: 10,
+        borderRadius: 30,
+        marginTop:40,
+        marginLeft:'5%',
         backgroundColor: '#113946',
         padding: 20,
         elevation: 2,
-        width:'45%',
+        width:'90%',
         marginEnd: '10%',
         shadowOffset: {
           width: 0,
           height: 2,
         },
+      }
+    }),
+    
+  },
+  myDailyDevotionExamplePressable: {
+    ...Platform.select({
+      ios: {
+        borderRadius: 30,
+        marginTop:40,
+        marginLeft:'5%',
+        backgroundColor: '#113946',
+        padding: 20,
+        elevation: 2,
+        width:'90%',
+        marginEnd: '10%',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+      },
+      android:{
+        borderRadius: 30,
+        marginTop:40,
+        marginBottom: -25,
+        marginLeft:'5%',
+        backgroundColor: '#113946',
+        padding: 20,
+        elevation: 2,
+        width:'90%',
+        marginEnd: '10%',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+      }
+    }),
+    
+  },
+  myDailyDevotionPressableDisabled: {
+    ...Platform.select({
+      ios: {
+        borderRadius: 30,
+        marginTop:40,
+        marginLeft:'5%',
+        backgroundColor: '#113946',
+        padding: 20,
+        elevation: 2,
+        width:'90%',
+        marginEnd: '10%',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        opacity:.4
+      },
+      android:{
+        borderRadius: 30,
+        marginTop:40,
+        marginLeft:'5%',
+        backgroundColor: '#113946',
+        padding: 20,
+        elevation: 2,
+        width:'90%',
+        marginEnd: '10%',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        opacity:.4
       }
     }),
     
@@ -1683,11 +1924,14 @@ const styles = StyleSheet.create({
         },
       },
       android:{
-        borderRadius: 10,
+        borderRadius: 30,
+        marginTop:10,
+        marginLeft:'5%',
         backgroundColor: '#113946',
-        width:'45%',
         padding: 20,
         elevation: 2,
+        width:'90%',
+        marginEnd: '10%',
         shadowOffset: {
           width: 0,
           height: 2,
@@ -1710,6 +1954,25 @@ const styles = StyleSheet.create({
         backgroundColor: '#113946',
         textAlign: 'center',
         fontSize: 15,
+      }
+    }),
+  },
+  myDailyDevotionPressableTextDisabled: {
+    
+    ...Platform.select({
+      ios: {
+        color: '#EAD7BB',
+        backgroundColor: '#113946',
+        textAlign: 'center',
+        fontSize: 25,
+        opacity:.8
+      },
+      android:{
+        color: '#EAD7BB',
+        // backgroundColor: '#113946',
+        textAlign: 'center',
+        fontSize: 15,
+        opacity:.8
       }
     }),
   },
@@ -1755,10 +2018,10 @@ const styles = StyleSheet.create({
         margin: 10,
       },
       android:{
-        position: 'absolute',
-        bottom:5,
-        display: 'inline',
-        flexDirection: 'row',
+        // position: 'absolute',
+        // bottom:5,
+        // display: 'inline',
+        // flexDirection: 'row',
         margin: 10,
       }
     }),
@@ -1854,7 +2117,7 @@ const styles = StyleSheet.create({
       },
     }),
     //maybe just for testing with a header
-    // marginTop:30,
+    marginTop:30,
     backgroundColor: '#113946',
     height: 50,
     padding:5,
