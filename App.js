@@ -1842,7 +1842,8 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         borderRadius: 30,
-        marginTop:40,
+        marginTop:-10,
+        marginBottom: -25,
         marginLeft:'5%',
         backgroundColor: '#113946',
         padding: 20,
@@ -1879,7 +1880,7 @@ const styles = StyleSheet.create({
         marginTop:40,
         marginLeft:'5%',
         backgroundColor: '#113946',
-        padding: 20,
+        padding: 15,
         elevation: 2,
         width:'90%',
         marginEnd: '10%',
@@ -2117,7 +2118,7 @@ const styles = StyleSheet.create({
       },
     }),
     //maybe just for testing with a header
-    marginTop:30,
+    // marginTop:30,
     backgroundColor: '#113946',
     height: 50,
     padding:5,
